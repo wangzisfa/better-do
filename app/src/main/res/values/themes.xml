@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- App window theme. Compose handles all real theming; this just sets the
+         window background + transparent system bars so there is no flash. -->
+    <style name="Theme.BetterDo" parent="android:Theme.Material.Light.NoActionBar">
+        <item name="android:windowBackground">@color/paper</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:windowLightStatusBar">true</item>
+    </style>
+
+    <!-- Launch (splash) theme. -->
+    <style name="Theme.BetterDo.Starting" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/icon_bg</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_launcher_foreground</item>
+        <item name="postSplashScreenTheme">@style/Theme.BetterDo</item>
+    </style>
+</resources>

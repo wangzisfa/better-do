@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Launcher / splash brand (cool blue, matches the app icon) -->
+    <color name="icon_bg">#EAF1FF</color>
+    <color name="brand_blue">#2F80ED</color>
+    <color name="brand_yellow">#F5B93E</color>
+
+    <!-- In-app warm paper window backgrounds (used by the activity theme) -->
+    <color name="paper">#FAF8F3</color>
+    <color name="paper_dark">#111110</color>
+    <color name="ember">#F0502E</color>
+</resources>

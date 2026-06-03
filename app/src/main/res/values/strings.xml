@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">BetterDo</string>
+    <string name="reminder_channel_name">待办提醒</string>
+    <string name="reminder_channel_desc">Agent 在合适的时间轻推你一把</string>
+</resources>

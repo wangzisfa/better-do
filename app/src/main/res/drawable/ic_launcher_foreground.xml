@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- Original icon is authored in a 1024 space; scale it into the adaptive
+         safe zone (72dp, centred) and drop the SVG drop-shadow filters. -->
+    <group
+        android:scaleX="0.0703125"
+        android:scaleY="0.0703125"
+        android:translateX="18"
+        android:translateY="18">
+
+        <!-- Paper card -->
+        <path
+            android:pathData="M236,204 H674 C693.096,204 711.41,211.585 724.912,225.088 L801.912,302.088 C815.415,315.59 823,333.904 823,353 V696 C823,735.765 790.765,768 751,768 H236 C196.235,768 164,735.765 164,696 V276 C164,236.235 196.235,204 236,204 Z"
+            android:fillColor="#FFFFFF"
+            android:strokeColor="#DEE7F7"
+            android:strokeWidth="5" />
+
+        <!-- Top folded corner -->
+        <path
+            android:pathData="M686,208 V311 C686,333.091 703.909,351 726,351 H819 C815.566,332.761 806.669,315.896 793.456,302.656 L724.708,233.768 C714.277,223.316 701.038,215.963 686,208 Z"
+            android:fillColor="#EEF3FF" />
+
+        <!-- List dots -->
+        <path android:pathData="M255,329 a27,27 0 1 0 54,0 a27,27 0 1 0 -54,0 Z" android:fillColor="#2F80ED" />
+        <path android:pathData="M255,449 a27,27 0 1 0 54,0 a27,27 0 1 0 -54,0 Z" android:fillColor="#F5B93E" />
+        <path android:pathData="M255,569 a27,27 0 1 0 54,0 a27,27 0 1 0 -54,0 Z"
+            android:fillColor="#DADFE9" android:strokeColor="#B9C1D1" android:strokeWidth="6" />
+
+        <!-- List lines -->
+        <path android:pathData="M366,309 H576 A10,10 0 0 1 576,329 H366 A10,10 0 0 1 366,309 Z" android:fillColor="#C9D0DC" />
+        <path android:pathData="M366,429 H576 A10,10 0 0 1 576,449 H366 A10,10 0 0 1 366,429 Z" android:fillColor="#C9D0DC" />
+        <path android:pathData="M366,549 H536 A10,10 0 0 1 536,569 H366 A10,10 0 0 1 366,549 Z" android:fillColor="#D4DAE5" />
+
+        <!-- Hero check -->
+        <path
+            android:pathData="M404,623 L503,722 L735,490"
+            android:strokeColor="#2F80ED"
+            android:strokeWidth="46"
+            android:strokeLineCap="round"
+            android:strokeLineJoin="round" />
+    </group>
+</vector>
