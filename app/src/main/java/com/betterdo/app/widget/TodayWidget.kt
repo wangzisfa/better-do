@@ -2,7 +2,6 @@ package com.betterdo.app.widget
 
 import android.content.Context
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.glance.GlanceId
@@ -16,7 +15,6 @@ import androidx.glance.appwidget.action.ActionCallback
 import androidx.glance.appwidget.action.actionRunCallback
 import androidx.glance.appwidget.cornerRadius
 import androidx.glance.appwidget.provideContent
-import androidx.glance.appwidget.update
 import androidx.glance.background
 import androidx.glance.layout.Alignment
 import androidx.glance.layout.Box
@@ -35,15 +33,16 @@ import androidx.glance.text.TextStyle
 import androidx.glance.unit.ColorProvider
 import com.betterdo.app.BetterDoApplication
 import com.betterdo.app.MainActivity
+import com.betterdo.app.R
 import com.betterdo.app.domain.model.Todo
 import kotlinx.coroutines.flow.first
 
-/** Brand palette with day/night variants so the widget reads in either theme. */
-private val Accent = Color(0xFFF0502E)
-private val Surface = ColorProvider(day = Color(0xFFFFFFFF), night = Color(0xFF1C1B1A))
-private val OnSurface = ColorProvider(day = Color(0xFF1C1B1A), night = Color(0xFFF4F2F0))
-private val Muted = ColorProvider(day = Color(0xFF8A8580), night = Color(0xFF9A958F))
-private val Disc = ColorProvider(day = Color(0x1AF0502E), night = Color(0x33F0502E))
+/** Brand palette via color resources, so day/night variants resolve automatically. */
+private val Accent = ColorProvider(R.color.widget_accent)
+private val Surface = ColorProvider(R.color.widget_surface)
+private val OnSurface = ColorProvider(R.color.widget_on_surface)
+private val Muted = ColorProvider(R.color.widget_muted)
+private val Disc = ColorProvider(R.color.widget_disc)
 
 private val TodoIdKey = ActionParameters.Key<String>("todoId")
 
@@ -83,7 +82,7 @@ private fun WidgetBody(todos: List<Todo>) {
                 modifier = GlanceModifier.defaultWeight(),
             )
             Box(modifier = GlanceModifier.clickable(actionRunCallback<RefreshAction>())) {
-                Text("↻", style = TextStyle(color = ColorProvider(Accent), fontSize = 16.sp))
+                Text("↻", style = TextStyle(color = Accent, fontSize = 16.sp))
             }
         }
         Spacer(GlanceModifier.height(10.dp))
@@ -122,7 +121,7 @@ private fun TodoLine(todo: Todo) {
                 ),
             contentAlignment = Alignment.Center,
         ) {
-            Text("○", style = TextStyle(color = ColorProvider(Accent), fontSize = 13.sp))
+            Text("○", style = TextStyle(color = Accent, fontSize = 13.sp))
         }
         Spacer(GlanceModifier.width(10.dp))
         Column(modifier = GlanceModifier.defaultWeight()) {
@@ -136,7 +135,7 @@ private fun TodoLine(todo: Todo) {
             }
         }
         if (todo.priority) {
-            Text("★", style = TextStyle(color = ColorProvider(Accent), fontSize = 13.sp))
+            Text("★", style = TextStyle(color = Accent, fontSize = 13.sp))
         }
     }
 }
