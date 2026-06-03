@@ -41,6 +41,7 @@ import com.betterdo.app.ui.screens.derive.DeriveViewModel
 import com.betterdo.app.ui.screens.detail.DetailViewModel
 import com.betterdo.app.ui.screens.detail.TodoDetailScreen
 import com.betterdo.app.ui.screens.onboarding.ImportScreen
+import com.betterdo.app.ui.screens.onboarding.ImportViewModel
 import com.betterdo.app.ui.screens.quickadd.QuickAddSheet
 import com.betterdo.app.ui.screens.review.ReviewScreen
 import com.betterdo.app.ui.screens.settings.SettingsScreen
@@ -99,12 +100,11 @@ fun AppNav(container: AppContainer, settings: Settings) {
     ) { inner ->
         NavHost(navController = nav, startDestination = start, modifier = Modifier.fillMaxSize()) {
             composable(Routes.IMPORT) {
-                ImportScreen(onDone = { tone ->
-                    scope.launch {
-                        container.settingsRepository.setTone(tone)
-                        container.settingsRepository.setOnboarded(true)
-                        ReminderScheduler.scheduleSeedReminders(context, tone)
-                    }
+                val vm: ImportViewModel = viewModel(factory = viewModelFactory { initializer { ImportViewModel(container) } })
+                ImportScreen(vm = vm, onDone = { tone, usedSample ->
+                    // The VM has already persisted the list/sample + saved the tone.
+                    // Seed reminders point at the sample todos, so only schedule them then.
+                    if (usedSample) ReminderScheduler.scheduleSeedReminders(context, tone)
                     nav.navigate(Routes.TODAY) { popUpTo(Routes.IMPORT) { inclusive = true } }
                 })
             }

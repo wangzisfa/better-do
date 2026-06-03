@@ -17,6 +17,10 @@ import com.betterdo.app.domain.model.Todo
  */
 interface AgentService {
 
+    /** Read a messy, hand-written / pasted list and structure it into todos — one per
+     *  meaningful line — inferring time, tag and icon. Powers the onboarding first screen. */
+    suspend fun parseList(raw: String): List<Todo>
+
     /** Read the day's todos and suggest follow-up "next step" todos. `round` lets the
      *  user ask the Agent to "再想想" for a fresh batch. Returns empty when tapped out. */
     suspend fun derive(today: List<Todo>, round: Int): List<DerivedSuggestion>

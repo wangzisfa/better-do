@@ -16,8 +16,10 @@ light/dark themes, and an ember accent. The app icon is the blue folded‑check 
 
 ## Features
 
-- **Onboarding / import** — paste a messy list, import from calendar, or connect
-  Todoist/Notion (stubbed), then watch the Agent "tidy" it and pick a persona.
+- **Onboarding / import** — **paste or hand-write a messy list** on the first screen and
+  the Agent parses it into real todos (detects times, tags & icons); calendar / Todoist /
+  Notion are stubbed. No list handy? Tap **"看看示例"** to load the curated sample day.
+  Then pick a persona.
 - **Today** — date + toned greeting, the Agent's **morning brief**, focus / today /
   done sections, rich todo rows (tag · time · 🔥streak · "Agent 加的" badge · comment
   preview), and toned completion reactions.
@@ -95,6 +97,7 @@ generative call returns *all three* tones so persona switching stays instant.
 
 ## Tests
 
-`./gradlew test` runs `MockAgentServiceTest` and `SeedDataTest`, covering the derive
-batches, tone resolution, and seed integrity (7 todos, AI source notes, every AI
-comment authored in all three personas).
+`./gradlew test` runs `MockAgentServiceTest` and `SeedDataTest`, covering the
+hand-written-list parser (line splitting, time/tag/icon detection, priority flags),
+the derive batches, tone resolution, and seed integrity (7 todos, AI source notes,
+every AI comment authored in all three personas).

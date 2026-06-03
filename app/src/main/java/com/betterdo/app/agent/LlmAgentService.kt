@@ -14,6 +14,9 @@ import com.betterdo.app.domain.model.Todo
  *
  * Suggested request/response contract (JSON over the wire):
  *
+ *   parseList → POST { raw }
+ *             ← { items:[{ title, time, tag, icon }] }   // service maps to Todo
+ *
  *   derive →  POST { todos:[{title,note,tag,done,streak}], history, round }
  *             ← { suggestions:[{ sourceTitle, title, tag,
  *                                why:{gentle,coach,savage} }] }
@@ -34,6 +37,7 @@ class LlmAgentService(
     private val notWired: Nothing
         get() = throw NotImplementedError("LlmAgentService is a v1 stub — bind MockAgentService.")
 
+    override suspend fun parseList(raw: String): List<Todo> = notWired
     override suspend fun derive(today: List<Todo>, round: Int): List<DerivedSuggestion> = notWired
     override suspend fun splitIntoSubtasks(todo: Todo): List<Subtask> = notWired
     override suspend fun commentOn(todo: Todo): Comment = notWired
