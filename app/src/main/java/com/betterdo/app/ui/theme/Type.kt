@@ -1,6 +1,7 @@
 package com.betterdo.app.ui.theme
 
 import androidx.compose.material3.Typography
+import androidx.compose.ui.text.ExperimentalTextApi
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -22,6 +23,7 @@ val DisplaySerif = FontFamily(
     Font(R.font.instrument_serif_italic, FontWeight.Normal, FontStyle.Italic),
 )
 
+@OptIn(ExperimentalTextApi::class)
 private fun notoSansSC(weight: Int, fontWeight: FontWeight) = Font(
     resId = R.font.noto_sans_sc,
     weight = fontWeight,

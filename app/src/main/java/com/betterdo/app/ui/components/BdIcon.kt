@@ -1,6 +1,7 @@
 package com.betterdo.app.ui.components
 
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -82,7 +83,7 @@ fun BdGlyph(
 @Composable
 private fun StrokePath(d: String, modifier: Modifier, size: Dp, color: Color, strokeWidth: Float) {
     val path = remember(d) { PathParser().parsePathString(d).toPath() }
-    Canvas(modifier.then(Modifier).size(size)) {
+    Canvas(modifier.size(size)) {
         val u = this.size.minDimension / 24f
         withTransform({ scale(u, u, pivot = Offset.Zero) }) {
             drawPath(
