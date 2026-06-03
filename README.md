@@ -82,6 +82,11 @@ it runs the unit tests, builds the debug APK with `./gradlew assembleDebug`, and
 uploads it as the **`betterdo-debug-apk`** artifact (download it from the run's summary
 page on the Actions tab).
 
+**Releases:** pushing a `v*` tag (e.g. `git tag v0.1.0 && git push origin v0.1.0`)
+runs the same pipeline and then publishes a **GitHub Release** with the APK attached
+as `betterdo-<tag>.apk` — a public, login-free download link. (The APK is debug-signed;
+wire a release keystore via repo secrets for a Play-ready build.)
+
 ## Going live with a real model
 
 Implement `LlmAgentService` (the contract + per‑tone prompt sketch are in the file)

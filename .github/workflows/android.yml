@@ -3,11 +3,13 @@ name: Android CI
 on:
   push:
     branches: [ "**" ]
+    tags: [ "v*" ]
   pull_request:
   workflow_dispatch:
 
+# `contents: write` is needed so the pipeline can create a GitHub Release on tags.
 permissions:
-  contents: read
+  contents: write
 
 concurrency:
   group: android-${{ github.ref }}
@@ -44,9 +46,22 @@ jobs:
       - name: Build debug APK
         run: ./gradlew assembleDebug --stacktrace
 
-      - name: Upload debug APK
+      - name: Upload debug APK (artifact)
         uses: actions/upload-artifact@v4
         with:
           name: betterdo-debug-apk
           path: app/build/outputs/apk/debug/*.apk
           if-no-files-found: error
+
+      # ---- Release (only on v* tags) ----
+      - name: Stage APK for release
+        if: startsWith(github.ref, 'refs/tags/v')
+        run: cp app/build/outputs/apk/debug/app-debug.apk "betterdo-${{ github.ref_name }}.apk"
+
+      - name: Publish GitHub Release
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          name: BetterDo ${{ github.ref_name }}
+          generate_release_notes: true
+          files: betterdo-${{ github.ref_name }}.apk
