@@ -2,23 +2,40 @@ package com.betterdo.app.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontVariation
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
+import com.betterdo.app.R
 
 /**
- * Typography. The design pairs an italic display serif (Instrument Serif) with a
- * Chinese body sans (Noto Sans SC). Until those TTFs are bundled in `res/font`,
- * we fall back to the platform serif (which renders CJK) and the system sans so
- * the build stays green. To use the real faces, drop the OFL TTFs into
- * `res/font` and replace the two families below, e.g.:
- *
- *   val DisplaySerif = FontFamily(Font(R.font.instrument_serif_italic, style = FontStyle.Italic))
- *   val BodySans = FontFamily(Font(R.font.noto_sans_sc))
+ * Typography. The design pairs an italic display serif (Instrument Serif, Latin)
+ * with a Chinese body sans (Noto Sans SC). Both are bundled in `res/font`
+ * (OFL-licensed). Noto Sans SC is a variable font, so each weight maps to its
+ * `wght` axis; CJK glyphs absent from Instrument Serif fall back to the system
+ * CJK face, exactly like the design's `'Instrument Serif','Noto Sans SC'` stack.
  */
-val DisplaySerif = FontFamily.Serif
-val BodySans = FontFamily.Default
+val DisplaySerif = FontFamily(
+    Font(R.font.instrument_serif_regular, FontWeight.Normal, FontStyle.Normal),
+    Font(R.font.instrument_serif_italic, FontWeight.Normal, FontStyle.Italic),
+)
+
+private fun notoSansSC(weight: Int, fontWeight: FontWeight) = Font(
+    resId = R.font.noto_sans_sc,
+    weight = fontWeight,
+    style = FontStyle.Normal,
+    variationSettings = FontVariation.Settings(FontVariation.weight(weight)),
+)
+
+val BodySans = FontFamily(
+    notoSansSC(300, FontWeight.Light),
+    notoSansSC(400, FontWeight.Normal),
+    notoSansSC(500, FontWeight.Medium),
+    notoSansSC(600, FontWeight.SemiBold),
+    notoSansSC(700, FontWeight.Bold),
+)
 
 /** Heading style helper — italic serif, the app's signature voice. */
 val DisplayStyle = TextStyle(

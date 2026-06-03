@@ -1,5 +1,7 @@
 # BetterDo
 
+[![Android CI](https://github.com/wangzisfa/better-do/actions/workflows/android.yml/badge.svg)](https://github.com/wangzisfa/better-do/actions/workflows/android.yml)
+
 A native Android **model-in-the-loop** to‑do app. BetterDo isn't a plain list — an
 AI agent (the mascot **"Dodo"**) reads your tasks, **derives** sensible follow‑up
 to‑dos, **splits** tasks into steps, **comments** on each item, and **nudges** you —
@@ -66,12 +68,19 @@ Requires the **Android SDK** (via Android Studio) and JDK 17+.
 The first build downloads dependencies from Google's Maven (`dl.google.com`) and
 Maven Central, so it needs network access to those hosts.
 
-### Fonts (optional, for exact typography)
+### Fonts
 
-The design pairs **Instrument Serif** (italic display) with **Noto Sans SC** (body).
-Until those OFL TTFs are bundled, the app falls back to the platform serif/sans (which
-render Chinese fine). To use the real faces, drop the TTFs into `app/src/main/res/font`
-and point `DisplaySerif` / `BodySans` in `ui/theme/Type.kt` at them.
+The design's faces are **bundled** in `app/src/main/res/font` (both OFL-licensed):
+**Instrument Serif** (italic display, Latin) and **Noto Sans SC** (body — the variable
+font, so each weight maps to its `wght` axis). CJK glyphs absent from Instrument Serif
+fall back to the system CJK face, matching the design's font stack.
+
+## Continuous integration
+
+`.github/workflows/android.yml` builds on every push / PR (and via **Run workflow**):
+it runs the unit tests, builds the debug APK with `./gradlew assembleDebug`, and
+uploads it as the **`betterdo-debug-apk`** artifact (download it from the run's summary
+page on the Actions tab).
 
 ## Going live with a real model
 
