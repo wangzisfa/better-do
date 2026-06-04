@@ -7,6 +7,7 @@ import androidx.datastore.preferences.core.longPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import com.betterdo.app.domain.model.AgentTone
+import com.betterdo.app.domain.model.ModelConfig
 import com.betterdo.app.domain.model.ThemeMode
 import com.betterdo.app.ui.theme.DefaultAccentArgb
 import kotlinx.coroutines.flow.Flow
@@ -31,6 +32,10 @@ class SettingsRepository(private val context: Context) {
         val THEME = stringPreferencesKey("theme")
         val ACCENT = longPreferencesKey("accent")
         val AI_COMMENTS = booleanPreferencesKey("ai_comments")
+        val MODEL_ENABLED = booleanPreferencesKey("model_enabled")
+        val MODEL_KEY = stringPreferencesKey("model_key")
+        val MODEL_NAME = stringPreferencesKey("model_name")
+        val MODEL_BASE = stringPreferencesKey("model_base")
     }
 
     val settings: Flow<Settings> = context.dataStore.data.map { p ->
@@ -57,6 +62,23 @@ class SettingsRepository(private val context: Context) {
 
     suspend fun setAiComments(value: Boolean) =
         edit { it[Keys.AI_COMMENTS] = value }
+
+    /** Real-model (OpenRouter) access config. */
+    val modelConfig: Flow<ModelConfig> = context.dataStore.data.map { p ->
+        ModelConfig(
+            enabled = p[Keys.MODEL_ENABLED] ?: false,
+            apiKey = p[Keys.MODEL_KEY] ?: "",
+            model = p[Keys.MODEL_NAME] ?: ModelConfig.DEFAULT_MODEL,
+            baseUrl = p[Keys.MODEL_BASE] ?: ModelConfig.DEFAULT_BASE_URL,
+        )
+    }
+
+    suspend fun setModelConfig(config: ModelConfig) = edit {
+        it[Keys.MODEL_ENABLED] = config.enabled
+        it[Keys.MODEL_KEY] = config.apiKey
+        it[Keys.MODEL_NAME] = config.model
+        it[Keys.MODEL_BASE] = config.baseUrl
+    }
 
     private suspend fun edit(block: (androidx.datastore.preferences.core.MutablePreferences) -> Unit) {
         context.dataStore.edit(block)

@@ -35,6 +35,7 @@ import androidx.compose.ui.unit.dp
 import com.betterdo.app.data.prefs.Settings
 import com.betterdo.app.di.AppContainer
 import com.betterdo.app.domain.model.AgentTone
+import com.betterdo.app.domain.model.ModelConfig
 import com.betterdo.app.domain.model.ThemeMode
 import com.betterdo.app.notifications.ReminderScheduler
 import com.betterdo.app.ui.components.BdGlyph
@@ -46,9 +47,14 @@ import com.betterdo.app.ui.theme.BdTheme
 import kotlinx.coroutines.launch
 
 @Composable
-fun SettingsScreen(container: AppContainer, onBack: () -> Unit) {
+fun SettingsScreen(
+    container: AppContainer,
+    onBack: () -> Unit,
+    onOpenModelConfig: () -> Unit = {},
+) {
     val colors = BdTheme.colors
     val settings by container.settingsRepository.settings.collectAsState(initial = Settings())
+    val modelConfig by container.settingsRepository.modelConfig.collectAsState(initial = ModelConfig())
     val scope = rememberCoroutineScope()
     val context = LocalContext.current
     val prefs = container.settingsRepository
@@ -79,6 +85,31 @@ fun SettingsScreen(container: AppContainer, onBack: () -> Unit) {
                                 ReminderScheduler.scheduleSeedReminders(context, tone)
                             }
                         })
+                    }
+                }
+            }
+
+            Section("模型接入") {
+                Surface(
+                    onClick = onOpenModelConfig,
+                    shape = RoundedCornerShape(14.dp),
+                    color = colors.surface2,
+                    contentColor = colors.ink,
+                    modifier = Modifier.fillMaxWidth(),
+                ) {
+                    Row(
+                        Modifier.padding(horizontal = 16.dp, vertical = 14.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        Column(Modifier.weight(1f)) {
+                            Text("OpenRouter 模型", style = MaterialTheme.typography.bodyLarge)
+                            Text(
+                                if (modelConfig.usable) "已启用 · ${modelConfig.model}" else "未启用，使用离线示例引擎",
+                                style = MaterialTheme.typography.bodySmall,
+                                color = colors.inkFaint,
+                            )
+                        }
+                        BdGlyph(Glyph.CHEVRON_RIGHT, size = 16.dp, tint = colors.inkFaint)
                     }
                 }
             }
