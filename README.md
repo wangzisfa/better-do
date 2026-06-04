@@ -31,6 +31,8 @@ light/dark themes, and an ember accent. The app icon is the blue folded‑check 
 - **Quick add** — jot something; the Agent acknowledges and offers a reminder.
 - **Toned reminders** via WorkManager notifications; **light/dark**, **accent** swatches,
   persona switching in **Settings**.
+- **Model access (模型接入)** — connect a real LLM via **OpenRouter**: enable, paste a key,
+  pick / fetch a model, and **测试连接** to debug it; off by default (offline mock engine).
 
 ## Tech stack
 
@@ -94,9 +96,23 @@ secrets for a Play-ready build.)
 
 ## Going live with a real model
 
-Implement `LlmAgentService` (the contract + per‑tone prompt sketch are in the file)
-and bind it instead of `MockAgentService` in `di/AppContainer.kt` — one line. Every
-generative call returns *all three* tones so persona switching stays instant.
+BetterDo ships with a **real model path built in** — OpenRouter. Open
+**Settings → 模型接入**, turn on **启用真实模型**, paste an OpenRouter API key
+(`openrouter.ai/keys`), pick a model (curated presets, or **拉取模型列表** to fetch the
+live catalog), and tap **测试连接** to debug the round‑trip (latency + reply) before
+saving.
+
+Once enabled, every generative call — list parsing, derive, sub‑task splitting, AI
+comments — routes through `OpenRouterAgentService` (OpenAI‑compatible chat
+completions, no extra networking dep — plain `HttpURLConnection`). Each call asks for
+strict JSON with *all three* tones in one shot so persona switching stays instant, and
+**any network/parse failure transparently falls back to the offline mock**, so the app
+never breaks when offline or misconfigured. The toggle is live: `AppContainer.agent` is
+a `RoutingAgentService` that re‑reads the config before each call, so switching the
+model on/off takes effect with no restart.
+
+The seam is unchanged: the older `LlmAgentService` stub documents the request/response
+contract, and you can still bind any `AgentService` in `di/AppContainer.kt`.
 
 ## Tests
 

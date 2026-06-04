@@ -44,6 +44,8 @@ import com.betterdo.app.ui.screens.onboarding.ImportScreen
 import com.betterdo.app.ui.screens.onboarding.ImportViewModel
 import com.betterdo.app.ui.screens.quickadd.QuickAddSheet
 import com.betterdo.app.ui.screens.review.ReviewScreen
+import com.betterdo.app.ui.screens.model.ModelConfigScreen
+import com.betterdo.app.ui.screens.model.ModelConfigViewModel
 import com.betterdo.app.ui.screens.settings.SettingsScreen
 import com.betterdo.app.ui.screens.today.TodayScreen
 import com.betterdo.app.ui.screens.today.TodayViewModel
@@ -58,6 +60,7 @@ object Routes {
     const val REVIEW = "review"
     const val DERIVE = "derive"
     const val SETTINGS = "settings"
+    const val MODEL = "model"
     const val DETAIL = "detail/{id}"
     fun detail(id: String) = "detail/$id"
 }
@@ -135,7 +138,15 @@ fun AppNav(container: AppContainer, settings: Settings) {
                 DeriveScreen(vm, onBack = { nav.popBackStack() })
             }
             composable(Routes.SETTINGS) {
-                SettingsScreen(container, onBack = { nav.popBackStack() })
+                SettingsScreen(
+                    container,
+                    onBack = { nav.popBackStack() },
+                    onOpenModelConfig = { nav.navigate(Routes.MODEL) },
+                )
+            }
+            composable(Routes.MODEL) {
+                val vm: ModelConfigViewModel = viewModel(factory = viewModelFactory { initializer { ModelConfigViewModel(container) } })
+                ModelConfigScreen(vm, onBack = { nav.popBackStack() })
             }
         }
     }
