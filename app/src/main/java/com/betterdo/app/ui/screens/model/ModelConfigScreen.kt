@@ -93,14 +93,14 @@ fun ModelConfigScreen(vm: ModelConfigViewModel, onBack: () -> Unit) {
                         Text("启用真实模型", style = MaterialTheme.typography.bodyLarge)
                         Text("通过 OpenRouter 调用", style = MaterialTheme.typography.bodySmall, color = colors.inkFaint)
                     }
-                    Switch(checked = vm.enabled, onCheckedChange = vm::setEnabled)
+                    Switch(checked = vm.enabled, onCheckedChange = vm::updateEnabled)
                 }
             }
 
             Section("API KEY") {
                 FieldBox(
                     value = vm.apiKey,
-                    onChange = vm::setApiKey,
+                    onChange = vm::updateApiKey,
                     placeholder = "sk-or-...",
                     visual = PasswordVisualTransformation(),
                     singleLine = true,
@@ -115,7 +115,7 @@ fun ModelConfigScreen(vm: ModelConfigViewModel, onBack: () -> Unit) {
             Section("BASE URL") {
                 FieldBox(
                     value = vm.baseUrl,
-                    onChange = vm::setBaseUrl,
+                    onChange = vm::updateBaseUrl,
                     placeholder = ModelConfig.DEFAULT_BASE_URL,
                     singleLine = true,
                     keyboardType = KeyboardType.Uri,
@@ -125,7 +125,7 @@ fun ModelConfigScreen(vm: ModelConfigViewModel, onBack: () -> Unit) {
             Section("选择模型") {
                 FieldBox(
                     value = vm.model,
-                    onChange = vm::setModel,
+                    onChange = vm::updateModel,
                     placeholder = ModelConfig.DEFAULT_MODEL,
                     singleLine = true,
                 )
@@ -137,7 +137,7 @@ fun ModelConfigScreen(vm: ModelConfigViewModel, onBack: () -> Unit) {
                     verticalArrangement = Arrangement.spacedBy(8.dp),
                 ) {
                     list.forEach { info ->
-                        ModelRow(info, selected = info.id == vm.model.trim()) { vm.setModel(info.id) }
+                        ModelRow(info, selected = info.id == vm.model.trim()) { vm.updateModel(info.id) }
                     }
                 }
                 Spacer(Modifier.size(10.dp))

@@ -53,10 +53,10 @@ class ModelConfigViewModel(private val container: AppContainer) : ViewModel() {
 
     private fun current() = ModelConfig(enabled, apiKey.trim(), model.trim(), baseUrl.trim())
 
-    fun setEnabled(v: Boolean) { enabled = v; dirty() }
-    fun setApiKey(v: String) { apiKey = v; dirty() }
-    fun setModel(v: String) { model = v; dirty() }
-    fun setBaseUrl(v: String) { baseUrl = v; dirty() }
+    fun updateEnabled(v: Boolean) { enabled = v; dirty() }
+    fun updateApiKey(v: String) { apiKey = v; dirty() }
+    fun updateModel(v: String) { model = v; dirty() }
+    fun updateBaseUrl(v: String) { baseUrl = v; dirty() }
 
     private fun dirty() { saved = false }
 
